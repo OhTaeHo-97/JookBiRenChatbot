@@ -3,6 +3,7 @@ package com.chatbot.answer.service;
 import com.chatbot.answer.dto.AnswerDto.ResponseDto;
 import com.chatbot.answer.entity.Answer;
 import com.chatbot.answer.repository.AnswerRepository;
+import com.chatbot.block.service.BlockService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
