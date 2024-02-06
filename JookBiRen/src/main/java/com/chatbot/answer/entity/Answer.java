@@ -1,17 +1,21 @@
 package com.chatbot.answer.entity;
 
+import com.chatbot.answer.dto.AnswerDto.AnswerPostDto;
+import com.chatbot.answer.dto.AnswerDto.Button;
+import com.chatbot.answer.dto.AnswerDto.Output;
+import com.chatbot.answer.dto.AnswerDto.ResponseDto;
+import com.chatbot.answer.dto.AnswerDto.Template;
+import com.chatbot.answer.dto.AnswerDto.TextCard;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import java.awt.Button;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.result.Output;
 
 @NoArgsConstructor
 @AllArgsConstructor
