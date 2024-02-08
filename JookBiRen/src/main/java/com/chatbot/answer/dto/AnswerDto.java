@@ -45,18 +45,18 @@ public class AnswerDto {
     @Getter
     @AllArgsConstructor
     public static class Template {
-        private final Output outputs;
+        private final List<Output> outputs;
     }
 
     @Getter
     public static class Output {
-        private final List<TextCard> textCard;
+        private final TextCard textCard;
 
-        private Output(List<TextCard> textCards) {
+        private Output(TextCard textCards) {
             this.textCard = textCards;
         }
 
-        public static Output of(List<TextCard> textCards) {
+        public static Output of(TextCard textCards) {
             return new Output(textCards);
         }
     }
