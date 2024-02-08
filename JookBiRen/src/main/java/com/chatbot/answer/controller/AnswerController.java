@@ -20,7 +20,6 @@ public class AnswerController {
 
     @PostMapping("/quiz")
     public ResponseEntity quiz1(@RequestBody AnswerPostDto quizInfo) {
-        System.out.println("a");
         ResponseDto response = answerService.checkAnswer(Answer.answerPostDtoToAnswer(quizInfo));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
