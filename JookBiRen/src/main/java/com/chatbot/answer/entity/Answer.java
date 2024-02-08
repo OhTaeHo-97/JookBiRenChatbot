@@ -51,24 +51,24 @@ public class Answer {
 
     private static ResponseDto makeResponseDto(Answer answer, String blockId, String answerId) {
         List<Button> buttons = makeButtons(answer, blockId, answerId);
-        List<TextCard> textCards = makeTextCards(answer, buttons);
-        Output output = Output.of(Collections.unmodifiableList(textCards));
-        Template template = new Template(output);
+        TextCard textCard = makeTextCards(answer, buttons);
+        List<Output> outputs = new ArrayList<>();
+        Output output = Output.of(textCard);
+        outputs.add(output);
+        Template template = new Template(outputs);
         ResponseDto responseDto = new ResponseDto(template);
 
         return responseDto;
     }
 
-    private static List<TextCard> makeTextCards(Answer answer, List<Button> buttons) {
+    private static TextCard makeTextCards(Answer answer, List<Button> buttons) {
         List<TextCard> textCards = new ArrayList<>();
         if (answer.getAnswer() == null) {
-            textCards.add(TextCard.of(String.format(WRONG_TEXT, answer.getEpisode(), answer.getQuizNumber()),
-                    Collections.unmodifiableList(buttons)));
-            return textCards;
+            return TextCard.of(String.format(WRONG_TEXT, answer.getEpisode(), answer.getQuizNumber()),
+                    Collections.unmodifiableList(buttons));
         }
-        textCards.add(TextCard.of(String.format(CORRECT_TEXT, answer.getEpisode(), answer.getQuizNumber()),
-                Collections.unmodifiableList(buttons)));
-        return textCards;
+        return TextCard.of(String.format(CORRECT_TEXT, answer.getEpisode(), answer.getQuizNumber()),
+                Collections.unmodifiableList(buttons));
     }
 
     private static List<Button> makeButtons(Answer answer, String blockId, String answerId) {
