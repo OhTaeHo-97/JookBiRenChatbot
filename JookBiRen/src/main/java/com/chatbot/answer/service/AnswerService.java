@@ -3,7 +3,7 @@ package com.chatbot.answer.service;
 import com.chatbot.answer.dto.AnswerDto.ResponseDto;
 import com.chatbot.answer.entity.Answer;
 import com.chatbot.answer.repository.AnswerRepository;
-import com.chatbot.block.service.BlockService;
+import com.chatbot.block.service.QuizBlockService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class AnswerService {
     private final AnswerRepository answerRepository;
-    private final BlockService blockService;
+    private final QuizBlockService quizBlockService;
 
     public ResponseDto checkAnswer(Answer userAnswer) {
         String validatedAnswer = validate(userAnswer);
@@ -34,13 +34,13 @@ public class AnswerService {
 
     private String getBlockId(Answer answer) {
         if (answer.getAnswer() == null) {
-            return blockService.findBlockId(answer.getEpisode(), answer.getQuizNumber(), false, false);
+            return quizBlockService.findBlockId(answer.getEpisode(), answer.getQuizNumber(), false, false);
         }
-        return blockService.findBlockId(answer.getEpisode(), answer.getQuizNumber(), true, false);
+        return quizBlockService.findBlockId(answer.getEpisode(), answer.getQuizNumber(), true, false);
     }
 
     private String getAnswerBlockId(Answer answer) {
-        return blockService.findBlockId(answer.getEpisode(), answer.getQuizNumber(), true, true);
+        return quizBlockService.findBlockId(answer.getEpisode(), answer.getQuizNumber(), true, true);
     }
 
     private Answer validateCorrectAnswer(Answer userAnswer, String answer) {
