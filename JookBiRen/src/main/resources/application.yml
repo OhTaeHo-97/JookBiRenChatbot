@@ -24,3 +24,7 @@ server:
   servlet:
     encoding:
       force-response: true
+
+login:
+  code:
+    prefix: ${CODE_PREFIX}
