@@ -26,16 +26,31 @@ public class CustomDto {
     public static class ResponseDto {
         private String version = VERSION;
         private Template template;
+
+        public ResponseDto(Template template) {
+            this.template = template;
+        }
     }
 
+    @Getter
     public static class Template {
         private List<Output> outputs;
+
+        public Template(List<Output> outputs) {
+            this.outputs = outputs;
+        }
     }
 
+    @Getter
     public static class Output {
         private TextCard textCard;
+
+        public Output(TextCard textCard) {
+            this.textCard = textCard;
+        }
     }
 
+    @Getter
     public static class TextCard {
         private String text = NOT_EXIST_CODE;
     }
