@@ -1,5 +1,6 @@
 package com.chatbot.user.entity;
 
+import com.chatbot.custom.dto.CustomDto.CustomOpenDto;
 import com.chatbot.user.dto.UserDto.BannedTextCard;
 import com.chatbot.user.dto.UserDto.Button;
 import com.chatbot.user.dto.UserDto.Output;
@@ -48,7 +49,11 @@ public class User {
         return new User(userPostDto.getAction().getParams().getInput_pw(),
                 userPostDto.getUserRequest().getUser().getId());
     }
-    
+
+    public static User customOpenDtoToUser(CustomOpenDto customOpenDto) {
+        return new User(null, customOpenDto.getUserRequest().getUser().getId());
+    }
+
     private static final String SUCCESSFUL_LOGIN = "%s님 환영합니다! ";
     private static final String BANNED_LOGIN = "%s는 중복 로그인으로 접근이 불가능한 계정입니다.\n";
     private static final String OVERLAPPING_LOGIN = "%s는 이미 다른 kakaoID에서 로그인 된 계정입니다.\n";
