@@ -65,4 +65,12 @@ public class UserService {
     private User validateCode(String code) {
         return userRepository.findByCode(code).orElse(null);
     }
+
+    public User findUserById(String kakaoId) {
+        return userRepository.findByFirstId(kakaoId).orElse(null);
+    }
+
+    public void updateUser(User user) {
+        userRepository.save(user);
+    }
 }
