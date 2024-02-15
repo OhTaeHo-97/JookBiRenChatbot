@@ -28,3 +28,7 @@ server:
 login:
   code:
     prefix: ${CODE_PREFIX}
+
+custom:
+  image:
+    url: ${CUSTOM_IMAGE_URL}
