@@ -21,4 +21,16 @@ public class CustomController {
         ResponseDto response = customService.openCustom(User.customOpenDtoToUser(customOpenInfo), 0);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    @PostMapping("/custom2")
+    public ResponseEntity customOpen2(@RequestBody CustomOpenDto customOpenInfo) {
+        ResponseDto response = customService.openCustom(User.customOpenDtoToUser(customOpenInfo), 1);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @PostMapping("/custom3")
+    public ResponseEntity customOpen3(@RequestBody CustomOpenDto customOpenInfo) {
+        ResponseDto response = customService.openCustom(User.customOpenDtoToUser(customOpenInfo), 2);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 }
