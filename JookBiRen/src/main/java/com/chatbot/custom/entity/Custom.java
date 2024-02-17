@@ -6,6 +6,7 @@ import static com.chatbot.custom.util.CustomConstant.POSE;
 import static com.chatbot.custom.util.CustomConstant.SNOUT;
 import static com.chatbot.custom.util.CustomConstant.SUNGLASSES;
 
+import com.chatbot.custom.dto.CustomDto.Custom1To2Dto;
 import com.chatbot.custom.dto.CustomDto.CustomImageDto;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -40,5 +41,9 @@ public class Custom {
         customs.add(new Custom(NECKLACE, customImageInfo.getAction().getParams().getInput_necklace()));
         customs.add(new Custom(POSE, customImageInfo.getAction().getParams().getPose()));
         return customs;
+    }
+
+    public static Custom custom1To2DtoToCustom(Custom1To2Dto custom1To2Dto) {
+        return new Custom(EYES, custom1To2Dto.getAction().getParams().getEyes());
     }
 }
