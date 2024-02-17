@@ -8,6 +8,7 @@ public class CustomDto {
     private static final String VERSION = "2.0";
     private static final String NOT_EXIST_CODE = "는 없는 접속코드 입니다.\n다시 입력해 주세요.";
     private static final String ALT_TEXT = "커스텀입니다";
+    private static final String TEXT = "%s - %s 을(를) 선택했습니다.";
 
     @Getter
     public static class CustomOpenDto {
@@ -17,6 +18,12 @@ public class CustomDto {
     @Getter
     public static class CustomImageDto {
         private Action action;
+    }
+
+    @Getter
+    public static class Custom1To2Dto {
+        private User userRequest;
+        private Custom1To2Action action;
     }
 
     @Getter
@@ -31,6 +38,16 @@ public class CustomDto {
         private String input_snout;
         private String input_necklace;
         private String pose;
+    }
+
+    @Getter
+    public static class Custom1To2Action {
+        private Eyes params;
+    }
+
+    @Getter
+    public static class Eyes {
+        private String eyes;
     }
 
     @Getter
@@ -127,6 +144,57 @@ public class CustomDto {
             this.messageText = messageText;
             this.blockId = blockId;
             this.label = label;
+        }
+    }
+
+    @Getter
+    public static class CustomAToBResponseDto {
+        private String version = VERSION;
+        private CustomAToBTemplate template;
+
+        public CustomAToBResponseDto(CustomAToBTemplate template) {
+            this.template = template;
+        }
+    }
+
+    @Getter
+    public static class CustomAToBTemplate {
+        private List<CustomAToBOutput> outputs;
+
+        public CustomAToBTemplate(List<CustomAToBOutput> outputs) {
+            this.outputs = outputs;
+        }
+    }
+
+    @Getter
+    public static class CustomAToBOutput {
+        private CustomAToBTextCard textCard;
+
+        public CustomAToBOutput(CustomAToBTextCard textCard) {
+            this.textCard = textCard;
+        }
+    }
+
+    @Getter
+    public static class CustomAToBTextCard {
+        private String text;
+        private List<CustomAToBButton> buttons;
+
+        public CustomAToBTextCard(String category, String type, List<CustomAToBButton> buttons) {
+            this.text = String.format(TEXT, category, type);
+            this.buttons = buttons;
+        }
+    }
+
+    @Getter
+    public static class CustomAToBButton {
+        private String action = ACTION;
+        private String label;
+        private String blockId;
+
+        public CustomAToBButton(String label, String blockId) {
+            this.label = label;
+            this.blockId = blockId;
         }
     }
 }
