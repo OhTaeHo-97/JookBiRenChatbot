@@ -1,6 +1,16 @@
 package com.chatbot.custom.service;
 
+import static com.chatbot.custom.util.CustomConstant.EYES;
+import static com.chatbot.custom.util.CustomConstant.NECKLACE;
+import static com.chatbot.custom.util.CustomConstant.SNOUT;
+
 import com.chatbot.block.service.CustomBlockService;
+import com.chatbot.block.service.CustomForwardBlockService;
+import com.chatbot.custom.dto.CustomDto.CustomAToBButton;
+import com.chatbot.custom.dto.CustomDto.CustomAToBOutput;
+import com.chatbot.custom.dto.CustomDto.CustomAToBResponseDto;
+import com.chatbot.custom.dto.CustomDto.CustomAToBTemplate;
+import com.chatbot.custom.dto.CustomDto.CustomAToBTextCard;
 import com.chatbot.custom.dto.CustomDto.CustomImageResponseDto;
 import com.chatbot.custom.dto.CustomDto.ImageOutput;
 import com.chatbot.custom.dto.CustomDto.ImageTemplate;
@@ -16,7 +26,9 @@ import com.chatbot.user.entity.User;
 import com.chatbot.user.service.UserService;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -24,9 +36,16 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Service
 public class CustomService {
+    private final Map<String, String> LABEL = new HashMap<>() {{
+        put(EYES, "안경 선택");
+        put(SNOUT, "목걸이 선택");
+        put(NECKLACE, "포즈 선택");
+    }};
+
     private final UserService userService;
     private final CustomRepository customRepository;
     private final CustomBlockService customBlockService;
+    private final CustomForwardBlockService customForwardBlockService;
 
     @Value("${custom.image.url}")
     private String IMAGE_URL;
@@ -108,5 +127,32 @@ public class CustomService {
         quickReplies.add(new QuickReply(REMAKE, remakeBlockId, REMAKE));
         quickReplies.add(new QuickReply(TO_FIRST, initialBlockId, TO_FIRST));
         return quickReplies;
+    }
+
+    public CustomAToBResponseDto makeEachCategoryImage(User userInfo, Custom customInfo) {
+        User user = userService.findUserById(userInfo.getFirstId());
+        int customCode = user.getCustom();
+        String blockId = customForwardBlockService.findBlockId(customInfo.getCategory(), (customCode & (1 << 2)) != 0);
+
+        return makeCustomAToBResponse(customInfo.getCategory(), customInfo.getType(),
+                LABEL.get(customInfo.getCategory()), blockId);
+    }
+
+    private CustomAToBResponseDto makeCustomAToBResponse(String category, String type, String label, String blockId) {
+        List<CustomAToBOutput> outputs = new ArrayList<>();
+        CustomAToBOutput output = new CustomAToBOutput(makeTextCard(category, type, label, blockId));
+        outputs.add(output);
+        CustomAToBTemplate template = new CustomAToBTemplate(Collections.unmodifiableList(outputs));
+        return new CustomAToBResponseDto(template);
+    }
+
+    private CustomAToBTextCard makeTextCard(String category, String type, String label, String blockId) {
+        List<CustomAToBButton> buttons = new ArrayList<>();
+        buttons.add(makeButton(label, blockId));
+        return new CustomAToBTextCard(category, type, Collections.unmodifiableList(buttons));
+    }
+
+    private CustomAToBButton makeButton(String label, String blockId) {
+        return new CustomAToBButton(label, blockId);
     }
 }
