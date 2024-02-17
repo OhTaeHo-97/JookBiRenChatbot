@@ -1,5 +1,6 @@
 package com.chatbot.user.entity;
 
+import com.chatbot.custom.dto.CustomDto.Custom1To2Dto;
 import com.chatbot.custom.dto.CustomDto.CustomOpenDto;
 import com.chatbot.user.dto.UserDto.BannedTextCard;
 import com.chatbot.user.dto.UserDto.Button;
@@ -52,6 +53,10 @@ public class User {
 
     public static User customOpenDtoToUser(CustomOpenDto customOpenDto) {
         return new User(null, customOpenDto.getUserRequest().getUser().getId());
+    }
+
+    public static User custom1To2DtoToUser(Custom1To2Dto custom1To2Dto) {
+        return new User(null, custom1To2Dto.getUserRequest().getUser().getId());
     }
 
     private static final String SUCCESSFUL_LOGIN = "%s님 환영합니다! ";
