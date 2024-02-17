@@ -1,5 +1,7 @@
 package com.chatbot.custom.controller;
 
+import com.chatbot.custom.dto.CustomDto.Custom1To2Dto;
+import com.chatbot.custom.dto.CustomDto.CustomAToBResponseDto;
 import com.chatbot.custom.dto.CustomDto.CustomImageDto;
 import com.chatbot.custom.dto.CustomDto.CustomImageResponseDto;
 import com.chatbot.custom.dto.CustomDto.CustomOpenDto;
@@ -41,6 +43,13 @@ public class CustomController {
     @PostMapping("/custom3")
     public ResponseEntity customOpen3(@RequestBody CustomOpenDto customOpenInfo) {
         ResponseDto response = customService.openCustom(User.customOpenDtoToUser(customOpenInfo), 2);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @PostMapping("/custom1to2")
+    public ResponseEntity custom1To2(@RequestBody Custom1To2Dto custom1To2Info) {
+        CustomAToBResponseDto response = customService.makeEachCategoryImage(User.custom1To2DtoToUser(custom1To2Info),
+                Custom.custom1To2DtoToCustom(custom1To2Info));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
