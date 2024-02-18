@@ -27,6 +27,12 @@ public class CustomDto {
     }
 
     @Getter
+    public static class Custom3To4Dto {
+        private User userRequest;
+        private Custom3To4Action action;
+    }
+
+    @Getter
     public static class Action {
         private Params params;
     }
@@ -46,8 +52,18 @@ public class CustomDto {
     }
 
     @Getter
+    public static class Custom3To4Action {
+        private Snout params;
+    }
+
+    @Getter
     public static class Eyes {
         private String eyes;
+    }
+
+    @Getter
+    public static class Snout {
+        private String snout;
     }
 
     @Getter
