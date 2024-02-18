@@ -8,6 +8,7 @@ import static com.chatbot.custom.util.CustomConstant.SUNGLASSES;
 
 import com.chatbot.custom.dto.CustomDto.Custom1To2Dto;
 import com.chatbot.custom.dto.CustomDto.Custom3To4Dto;
+import com.chatbot.custom.dto.CustomDto.Custom4To5Dto;
 import com.chatbot.custom.dto.CustomDto.CustomImageDto;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -50,5 +51,9 @@ public class Custom {
 
     public static Custom custom3To4DtoToCustom(Custom3To4Dto custom3To4Dto) {
         return new Custom(SNOUT, custom3To4Dto.getAction().getParams().getSnout());
+    }
+
+    public static Custom custom4To5DtoToCustom(Custom4To5Dto custom4To5Dto) {
+        return new Custom(NECKLACE, custom4To5Dto.getAction().getParams().getNecklace());
     }
 }
