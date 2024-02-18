@@ -33,6 +33,12 @@ public class CustomDto {
     }
 
     @Getter
+    public static class Custom4To5Dto {
+        private User userRequest;
+        private Custom4To5Action action;
+    }
+
+    @Getter
     public static class Action {
         private Params params;
     }
@@ -57,6 +63,11 @@ public class CustomDto {
     }
 
     @Getter
+    public static class Custom4To5Action {
+        private Necklace params;
+    }
+
+    @Getter
     public static class Eyes {
         private String eyes;
     }
@@ -64,6 +75,11 @@ public class CustomDto {
     @Getter
     public static class Snout {
         private String snout;
+    }
+
+    @Getter
+    public static class Necklace {
+        private String necklace;
     }
 
     @Getter
