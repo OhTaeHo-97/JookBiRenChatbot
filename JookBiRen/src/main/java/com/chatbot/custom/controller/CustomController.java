@@ -2,6 +2,7 @@ package com.chatbot.custom.controller;
 
 import com.chatbot.custom.dto.CustomDto.Custom1To2Dto;
 import com.chatbot.custom.dto.CustomDto.Custom3To4Dto;
+import com.chatbot.custom.dto.CustomDto.Custom4To5Dto;
 import com.chatbot.custom.dto.CustomDto.CustomAToBResponseDto;
 import com.chatbot.custom.dto.CustomDto.CustomImageDto;
 import com.chatbot.custom.dto.CustomDto.CustomImageResponseDto;
@@ -50,14 +51,21 @@ public class CustomController {
     @PostMapping("/custom1to2")
     public ResponseEntity custom1To2(@RequestBody Custom1To2Dto custom1To2Info) {
         CustomAToBResponseDto response = customService.makeEachCategoryImage(User.custom1To2DtoToUser(custom1To2Info),
-                Custom.custom1To2DtoToCustom(custom1To2Info), 0);
+                Custom.custom1To2DtoToCustom(custom1To2Info));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PostMapping("/custom3to4")
     public ResponseEntity custom3To4(@RequestBody Custom3To4Dto custom3To4Info) {
         CustomAToBResponseDto response = customService.makeEachCategoryImage(User.custom3To4DtoToUser(custom3To4Info),
-                Custom.custom3To4DtoToCustom(custom3To4Info), 1);
+                Custom.custom3To4DtoToCustom(custom3To4Info));
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @PostMapping("/custom4to5")
+    public ResponseEntity custom3To4(@RequestBody Custom4To5Dto custom4To5Info) {
+        CustomAToBResponseDto response = customService.makeEachCategoryImage(User.custom4To5DtoToUser(custom4To5Info),
+                Custom.custom4To5DtoToCustom(custom4To5Info));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
