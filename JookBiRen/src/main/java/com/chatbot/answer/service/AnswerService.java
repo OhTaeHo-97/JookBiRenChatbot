@@ -29,7 +29,8 @@ public class AnswerService {
         String blockId = getBlockId(answer);
         String answerBlockId = getAnswerBlockId(answer);
 
-        return Answer.answerToResponseDto(answer, blockId, answerBlockId);
+        return Answer.answerToResponseDto(answer, blockId, answerBlockId,
+                (userAnswer.getEpisode() == 0 && userAnswer.getQuizNumber() == 0));
     }
 
     private String getBlockId(Answer answer) {
