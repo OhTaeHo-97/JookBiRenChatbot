@@ -1,5 +1,6 @@
 package com.chatbot.custom.service;
 
+import static com.chatbot.custom.util.CustomConstant.CUSTOM_CODE_INDEX;
 import static com.chatbot.custom.util.CustomConstant.EYES;
 import static com.chatbot.custom.util.CustomConstant.NECKLACE;
 import static com.chatbot.custom.util.CustomConstant.SNOUT;
@@ -134,11 +135,11 @@ public class CustomService {
         return quickReplies;
     }
 
-    public CustomAToBResponseDto makeEachCategoryImage(User userInfo, Custom customInfo, int customIdx) {
+    public CustomAToBResponseDto makeEachCategoryImage(User userInfo, Custom customInfo) {
         User user = userService.findUserById(userInfo.getFirstId());
         int customCode = user.getCustom();
         String blockId = customForwardBlockService.findBlockId(customInfo.getCategory(),
-                (customCode & (1 << (2 - customIdx))) != 0);
+                (customCode & (1 << CUSTOM_CODE_INDEX.get(customInfo.getCategory()))) != 0);
 
         return makeCustomAToBResponse(CATEGORY_TEXT.get(customInfo.getCategory()), customInfo.getType(),
                 LABEL.get(customInfo.getCategory()), blockId);
