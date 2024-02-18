@@ -39,19 +39,21 @@ public class Answer {
         return new Answer(0, episode, quizNumber, userInput.replaceAll(" ", "").toLowerCase());
     }
 
+    private static final String TUTORIAL_CORRECT_TEXT = "튜토리얼 문제 정답입니다.";
+    private static final String TUTORIAL_WRONG_TEXT = "튜토리얼 문제 오답입니다.\n 힌트를 확인해보세요!";
     private static final String CORRECT_TEXT = "문제 %d-%d 정답입니다.";
     private static final String ANSWER_TEXT = "문제 %d-%d 해설";
     private static final String NEXT_TEXT = "다음";
     private static final String WRONG_TEXT = "문제 %d-%d 오답입니다.";
     private static final String REPLAY_TEXT = "문제 다시 보기";
 
-    public static ResponseDto answerToResponseDto(Answer answer, String blockId, String answerId) {
-        return makeResponseDto(answer, blockId, answerId);
+    public static ResponseDto answerToResponseDto(Answer answer, String blockId, String answerId, boolean isTutorial) {
+        return makeResponseDto(answer, blockId, answerId, isTutorial);
     }
 
-    private static ResponseDto makeResponseDto(Answer answer, String blockId, String answerId) {
-        List<Button> buttons = makeButtons(answer, blockId, answerId);
-        TextCard textCard = makeTextCards(answer, buttons);
+    private static ResponseDto makeResponseDto(Answer answer, String blockId, String answerId, boolean isTutorial) {
+        List<Button> buttons = makeButtons(answer, blockId, answerId, isTutorial);
+        TextCard textCard = makeTextCard(answer, buttons, isTutorial);
         List<Output> outputs = new ArrayList<>();
         Output output = Output.of(textCard);
         outputs.add(output);
@@ -61,19 +63,33 @@ public class Answer {
         return responseDto;
     }
 
-    private static TextCard makeTextCards(Answer answer, List<Button> buttons) {
-        List<TextCard> textCards = new ArrayList<>();
+    private static TextCard makeTextCard(Answer answer, List<Button> buttons, boolean isTutorial) {
         if (answer.getAnswer() == null) {
-            return TextCard.of(String.format(WRONG_TEXT, answer.getEpisode(), answer.getQuizNumber()),
-                    Collections.unmodifiableList(buttons));
+            return makeWrongTextCard(answer.getEpisode(), answer.getQuizNumber(), isTutorial, buttons);
         }
-        return TextCard.of(String.format(CORRECT_TEXT, answer.getEpisode(), answer.getQuizNumber()),
-                Collections.unmodifiableList(buttons));
+        return makeCorrectTextCard(answer.getEpisode(), answer.getQuizNumber(), isTutorial, buttons);
     }
 
-    private static List<Button> makeButtons(Answer answer, String blockId, String answerId) {
+    private static TextCard makeCorrectTextCard(int episode, int quizNumber, boolean isTutorial, List<Button> buttons) {
+        if (isTutorial) {
+            return TextCard.of(TUTORIAL_CORRECT_TEXT, Collections.unmodifiableList(buttons));
+        }
+        return TextCard.of(String.format(CORRECT_TEXT, episode, quizNumber), Collections.unmodifiableList(buttons));
+    }
+
+    private static TextCard makeWrongTextCard(int episode, int quizNumber, boolean isTutorial, List<Button> buttons) {
+        if (isTutorial) {
+            return TextCard.of(TUTORIAL_WRONG_TEXT, Collections.unmodifiableList(buttons));
+        }
+        return TextCard.of(String.format(WRONG_TEXT, episode, quizNumber), Collections.unmodifiableList(buttons));
+    }
+
+    private static List<Button> makeButtons(Answer answer, String blockId, String answerId, boolean isTutorial) {
         if (answer.getAnswer() == null) {
             return makeWrongButtons(blockId);
+        }
+        if (isTutorial) {
+            return makeTutorialCorrectButtons(blockId);
         }
         return makeCorrectButtons(answer, blockId, answerId);
     }
@@ -81,6 +97,12 @@ public class Answer {
     private static List<Button> makeCorrectButtons(Answer answer, String blockId, String answerId) {
         List<Button> buttons = new ArrayList<>();
         buttons.add(Button.of(String.format(ANSWER_TEXT, answer.getEpisode(), answer.getQuizNumber()), answerId));
+        buttons.add(Button.of(NEXT_TEXT, blockId));
+        return buttons;
+    }
+
+    private static List<Button> makeTutorialCorrectButtons(String blockId) {
+        List<Button> buttons = new ArrayList<>();
         buttons.add(Button.of(NEXT_TEXT, blockId));
         return buttons;
     }
