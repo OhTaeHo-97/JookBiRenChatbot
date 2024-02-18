@@ -41,6 +41,11 @@ public class CustomService {
         put(SNOUT, "목걸이 선택");
         put(NECKLACE, "포즈 선택");
     }};
+    private final Map<String, String> CATEGORY_TEXT = new HashMap<>() {{
+        put(EYES, "눈");
+        put(SNOUT, "주둥이");
+        put(NECKLACE, "목걸이");
+    }};
 
     private final UserService userService;
     private final CustomRepository customRepository;
@@ -129,12 +134,13 @@ public class CustomService {
         return quickReplies;
     }
 
-    public CustomAToBResponseDto makeEachCategoryImage(User userInfo, Custom customInfo) {
+    public CustomAToBResponseDto makeEachCategoryImage(User userInfo, Custom customInfo, int customIdx) {
         User user = userService.findUserById(userInfo.getFirstId());
         int customCode = user.getCustom();
-        String blockId = customForwardBlockService.findBlockId(customInfo.getCategory(), (customCode & (1 << 2)) != 0);
+        String blockId = customForwardBlockService.findBlockId(customInfo.getCategory(),
+                (customCode & (1 << (2 - customIdx))) != 0);
 
-        return makeCustomAToBResponse(customInfo.getCategory(), customInfo.getType(),
+        return makeCustomAToBResponse(CATEGORY_TEXT.get(customInfo.getCategory()), customInfo.getType(),
                 LABEL.get(customInfo.getCategory()), blockId);
     }
 
