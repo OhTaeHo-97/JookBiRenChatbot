@@ -7,5 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface LoginBlockRepository extends JpaRepository<LoginBlock, Long> {
     Optional<LoginBlock> findByIsSuccessfulLogin(boolean isSuccessfulLogin);
 
-    Optional<LoginBlock> findByIsSuccessfulLoginAndIsTutorial(boolean isSuccessfulLogin, boolean isTutorial);
+    Optional<LoginBlock> findByIsSuccessfulLoginAndIsTutorialAndIsStory(boolean isSuccessfulLogin, boolean isTutorial,
+                                                                        boolean isStory);
+
+    Optional<LoginBlock> findByIsSuccessfulLoginAndIsStory(boolean isSuccessfulLogin, boolean isStory);
 }
