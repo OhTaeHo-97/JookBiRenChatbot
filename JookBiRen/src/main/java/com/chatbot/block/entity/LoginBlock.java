@@ -17,4 +17,16 @@ public class LoginBlock {
     private String blockId;
     private boolean isSuccessfulLogin;
     private boolean isTutorial;
+    private boolean isStory;
+
+    @Override
+    public String toString() {
+        return "LoginBlock{" +
+                "id=" + id +
+                ", blockId='" + blockId + '\'' +
+                ", isSuccessfulLogin=" + isSuccessfulLogin +
+                ", isTutorial=" + isTutorial +
+                ", isStory=" + isStory +
+                '}';
+    }
 }
