@@ -10,12 +10,12 @@ import com.chatbot.custom.dto.CustomDto.Custom1To2Dto;
 import com.chatbot.custom.dto.CustomDto.Custom3To4Dto;
 import com.chatbot.custom.dto.CustomDto.Custom4To5Dto;
 import com.chatbot.custom.dto.CustomDto.CustomImageDto;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

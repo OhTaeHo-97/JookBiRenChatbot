@@ -4,7 +4,7 @@ import com.chatbot.answer.dto.AnswerDto.ResponseDto;
 import com.chatbot.answer.entity.Answer;
 import com.chatbot.answer.repository.AnswerRepository;
 import com.chatbot.block.service.QuizBlockService;
-import jakarta.transaction.Transactional;
+import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

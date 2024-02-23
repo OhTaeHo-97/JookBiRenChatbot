@@ -2,7 +2,7 @@ package com.chatbot.block.service;
 
 import com.chatbot.block.entity.CustomBlock;
 import com.chatbot.block.repository.CustomBlockRepository;
-import jakarta.transaction.Transactional;
+import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

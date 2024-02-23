@@ -2,9 +2,9 @@ package com.chatbot.block.service;
 
 import com.chatbot.block.entity.LoginBlock;
 import com.chatbot.block.repository.LoginBlockRepository;
-import jakarta.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
