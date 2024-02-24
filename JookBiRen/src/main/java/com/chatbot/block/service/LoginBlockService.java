@@ -4,6 +4,7 @@ import com.chatbot.block.entity.LoginBlock;
 import com.chatbot.block.repository.LoginBlockRepository;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -66,6 +67,6 @@ public class LoginBlockService {
 
     private List<String> extractBlockIdInLoginBlocks(List<LoginBlock> loginBlocks) {
         System.out.println(loginBlocks);
-        return loginBlocks.stream().map(loginBlock -> loginBlock.getBlockId()).toList();
+        return loginBlocks.stream().map(loginBlock -> loginBlock.getBlockId()).collect(Collectors.toList());
     }
 }
