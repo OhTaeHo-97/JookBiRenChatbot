@@ -1,9 +1,9 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${AWS_RDS_ENDPOINT}/chatbot?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC
-    username: ${MYSQL_ROOT_NAME}
-    password: ${MYSQL_ROOT_PASSWORD}
+    url: jdbc:mysql://${AWS_RDS_ENDPOINT}/chatbot?useSSL=false&characterEncoding=UTF-8&serverTimezone=Asia/Seoul
+    username: ${AWS_MYSQL_ROOT_NAME}
+    password: ${AWS_MYSQL_ROOT_PASSWORD}
   jpa:
     database: mysql
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
@@ -14,6 +14,9 @@ spring:
       hibernate:
         format_sql: true
     defer-datasource-initialization: true
+  sql:
+    init:
+      mode: always
   config:
     import: aws-parameterstore:/chatbot/jookbiren
 
