@@ -6,7 +6,7 @@ spring:
     password: ${MYSQL_ROOT_PASSWORD}
   jpa:
     database: mysql
-    database-platform: org.hibernate.dialect.MySQLDialect
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     hibernate:
       ddl-auto: update
     show-sql: true
