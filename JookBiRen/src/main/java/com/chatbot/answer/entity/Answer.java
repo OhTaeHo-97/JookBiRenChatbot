@@ -46,6 +46,8 @@ public class Answer {
     private static final String NEXT_TEXT = "다음";
     private static final String WRONG_TEXT = "문제 %d-%d 오답입니다.";
     private static final String REPLAY_TEXT = "문제 다시 보기";
+    private static final String QUIZ_1_5_REPLAY_TEXT = "문제 1-5 오답입니다.\n 남은 배터리 %d%% !!";
+    private static final String INCORRECT_END_TEXT = "삐! 시스템 종료...";
 
     public static ResponseDto answerToResponseDto(Answer answer, String blockId, String answerId, boolean isTutorial) {
         return makeResponseDto(answer, blockId, answerId, isTutorial);
@@ -81,12 +83,16 @@ public class Answer {
         if (isTutorial) {
             return TextCard.of(TUTORIAL_WRONG_TEXT, Collections.unmodifiableList(buttons));
         }
+        if (episode == 1 && quizNumber >= 5) {
+            return TextCard.of(String.format(QUIZ_1_5_REPLAY_TEXT, (7 - quizNumber)),
+                    Collections.unmodifiableList(buttons));
+        }
         return TextCard.of(String.format(WRONG_TEXT, episode, quizNumber), Collections.unmodifiableList(buttons));
     }
 
     private static List<Button> makeButtons(Answer answer, String blockId, String answerId, boolean isTutorial) {
         if (answer.getAnswer() == null) {
-            return makeWrongButtons(blockId);
+            return makeWrongButtons(answer.episode, answer.quizNumber, blockId);
         }
         if (isTutorial) {
             return makeTutorialCorrectButtons(blockId);
@@ -96,7 +102,11 @@ public class Answer {
 
     private static List<Button> makeCorrectButtons(Answer answer, String blockId, String answerId) {
         List<Button> buttons = new ArrayList<>();
-        buttons.add(Button.of(String.format(ANSWER_TEXT, answer.getEpisode(), answer.getQuizNumber()), answerId));
+        int quizNumber = answer.getQuizNumber();
+        if (answer.episode == 1 && (quizNumber == 6 || quizNumber == 7)) {
+            quizNumber = 5;
+        }
+        buttons.add(Button.of(String.format(ANSWER_TEXT, answer.getEpisode(), quizNumber), answerId));
         buttons.add(Button.of(NEXT_TEXT, blockId));
         return buttons;
     }
@@ -107,9 +117,13 @@ public class Answer {
         return buttons;
     }
 
-    private static List<Button> makeWrongButtons(String blockId) {
+    private static List<Button> makeWrongButtons(int episode, int quizNumber, String blockId) {
         List<Button> buttons = new ArrayList<>();
-        buttons.add(Button.of(REPLAY_TEXT, blockId));
+        String label = REPLAY_TEXT;
+        if (episode == 1 && quizNumber == 7) {
+            label = INCORRECT_END_TEXT;
+        }
+        buttons.add(Button.of(label, blockId));
         return buttons;
     }
 }
