@@ -76,6 +76,9 @@ public class Answer {
         if (isTutorial) {
             return TextCard.of(TUTORIAL_CORRECT_TEXT, Collections.unmodifiableList(buttons));
         }
+        if (episode == 1 && (quizNumber >= 5)) {
+            return TextCard.of(String.format(CORRECT_TEXT, episode, 5), Collections.unmodifiableList(buttons));
+        }
         return TextCard.of(String.format(CORRECT_TEXT, episode, quizNumber), Collections.unmodifiableList(buttons));
     }
 
