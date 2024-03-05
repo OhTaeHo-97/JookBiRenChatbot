@@ -87,7 +87,7 @@ public class CustomService {
     // 응답 DTO 생성
     public ResponseDto openCustom(User userInfo, int customLoc) {
         User user = userService.findUserById(userInfo.getFirstId());
-        if (user != null) {
+        if (user != null && user.isDlc()) {
             int customCode = user.getCustom();
             if ((customCode & (1 << (2 - customLoc))) == 0) {
                 customCode ^= (1 << (2 - customLoc));
