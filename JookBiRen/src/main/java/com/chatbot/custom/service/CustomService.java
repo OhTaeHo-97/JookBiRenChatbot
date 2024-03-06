@@ -86,7 +86,7 @@ public class CustomService {
 
     // 응답 DTO 생성
     public ResponseDto openCustom(User userInfo, int customLoc) {
-        User user = userService.findUserById(userInfo.getFirstId());
+        User user = userService.findUserByIdOrderByCustom(userInfo.getFirstId());
         if (user != null && user.isDlc()) {
             int customCode = user.getCustom();
             if ((customCode & (1 << (2 - customLoc))) == 0) {
@@ -136,7 +136,7 @@ public class CustomService {
     }
 
     public CustomAToBResponseDto makeEachCategoryImage(User userInfo, Custom customInfo) {
-        User user = userService.findUserById(userInfo.getFirstId());
+        User user = userService.findUserByIdOrderByCustom(userInfo.getFirstId());
         int customCode = user.getCustom();
         String blockId = customForwardBlockService.findBlockId(customInfo.getCategory(),
                 (customCode & (1 << CUSTOM_CODE_INDEX.get(customInfo.getCategory()))) != 0);

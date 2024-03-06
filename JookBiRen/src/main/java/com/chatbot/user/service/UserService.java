@@ -82,7 +82,19 @@ public class UserService {
     }
 
     public User findUserById(String kakaoId) {
-        return userRepository.findByFirstId(kakaoId).orElse(null);
+        List<User> users = userRepository.findAllByFirstId(kakaoId);
+        if (users == null || users.isEmpty()) {
+            return null;
+        }
+        return users.get(0);
+    }
+
+    public User findUserByIdOrderByCustom(String kakaoId) {
+        List<User> users = userRepository.findAllByFirstIdOrderByCustomDesc(kakaoId);
+        if (users == null || users.isEmpty()) {
+            return null;
+        }
+        return users.get(0);
     }
 
     public void updateUser(User user) {
