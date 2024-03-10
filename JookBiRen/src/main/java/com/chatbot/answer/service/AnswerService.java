@@ -2,7 +2,7 @@ package com.chatbot.answer.service;
 
 import com.chatbot.answer.dto.AnswerDto.ResponseDto;
 import com.chatbot.answer.entity.Answer;
-import com.chatbot.answer.repository.AnswerRepository;
+import com.chatbot.answer.repository.AnswerQuerydslRepository;
 import com.chatbot.block.service.QuizBlockService;
 import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +12,8 @@ import org.springframework.stereotype.Service;
 @Transactional
 @Service
 public class AnswerService {
-    private final AnswerRepository answerRepository;
+    //    private final AnswerRepository answerRepository;
+    private final AnswerQuerydslRepository answerRepository;
     private final QuizBlockService quizBlockService;
 
     public ResponseDto checkAnswer(Answer userAnswer) {
