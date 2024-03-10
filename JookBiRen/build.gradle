@@ -1,7 +1,14 @@
+buildscript {
+    ext {
+        queryDslVersion = "5.0.0"
+    }
+}
+
 plugins {
     id 'java'
     id 'org.springframework.boot' version '2.7.13'
     id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+    id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
 }
 
 group = 'com.chatbot'
@@ -11,14 +18,14 @@ java {
     sourceCompatibility = '11'
 }
 
+repositories {
+    mavenCentral()
+}
+
 configurations {
     compileOnly {
         extendsFrom annotationProcessor
     }
-}
-
-repositories {
-    mavenCentral()
 }
 
 dependencies {
@@ -33,13 +40,16 @@ dependencies {
 
     // mysql
     implementation 'org.springframework.boot:spring-boot-starter'
-//    implementation 'mysql:mysql-connector-java:8.0.23'
     runtimeOnly 'com.mysql:mysql-connector-j'
 
     // Parameter Store
     implementation 'org.springframework.cloud:spring-cloud-starter-aws-parameter-store-config'
-//    implementation platform("io.awspring.cloud:spring-cloud-aws-dependencies:3.0.1")
-//    implementation 'io.awspring.cloud:spring-cloud-aws-starter-parameter-store'
+
+    // querydsl
+    implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
+    annotationProcessor "com.querydsl:querydsl-apt:${queryDslVersion}"
+    implementation "com.querydsl:querydsl-core:${queryDslVersion}"
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
@@ -50,10 +60,23 @@ dependencyManagement {
     }
 }
 
-//tasks.named('bootBuildImage') {
-//    builder = 'paketobuildpacks/builder-jammy-base:latest'
-//}
-
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+//querydsl 추가 시작
+def querydslDir = "$buildDir/generated/querydsl"
+querydsl {
+    jpa = true
+    querydslSourcesDir = querydslDir
+}
+sourceSets {
+    main.java.srcDir querydslDir
+}
+configurations {
+    querydsl.extendsFrom compileClasspath
+}
+compileQuerydsl {
+    options.annotationProcessorPath = configurations.querydsl
+}
+//querydsl 추가 끝
