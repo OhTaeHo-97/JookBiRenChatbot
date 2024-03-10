@@ -3,7 +3,7 @@ package com.chatbot.user.service;
 import com.chatbot.block.service.LoginBlockService;
 import com.chatbot.user.dto.UserDto.ResponseDto;
 import com.chatbot.user.entity.User;
-import com.chatbot.user.repository.UserRepository;
+import com.chatbot.user.repository.UserQuerydslRepository;
 import java.util.List;
 import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +14,8 @@ import org.springframework.stereotype.Service;
 @Service
 @Transactional
 public class UserService {
-    private final UserRepository userRepository;
+    //    private final UserRepository userRepository;
+    private final UserQuerydslRepository userRepository;
     private final LoginBlockService loginBlockService;
 
     @Value("${login.code.prefix}")

@@ -1,0 +1,7 @@
+aws:
+  paramstore:
+    enabled: true
+    prefix: /chatbot
+    name: jookbiren
+    profileSeparator: _
+    region: ap-northeast-2

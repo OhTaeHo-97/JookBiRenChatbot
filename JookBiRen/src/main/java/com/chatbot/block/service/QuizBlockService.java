@@ -1,14 +1,15 @@
 package com.chatbot.block.service;
 
 import com.chatbot.block.entity.QuizBlock;
-import com.chatbot.block.repository.QuizBlockRepository;
+import com.chatbot.block.repository.QuizBlockQuerydslRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class QuizBlockService {
-    private final QuizBlockRepository quizBlockRepository;
+    //    private final QuizBlockRepository quizBlockRepository;
+    private final QuizBlockQuerydslRepository quizBlockRepository;
 
     public String findBlockId(int episode, int quizNumber, boolean isCorrect, boolean isAnswer) {
         QuizBlock block = validateBlock(episode, quizNumber, isCorrect, isAnswer);

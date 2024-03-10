@@ -1,7 +1,7 @@
 package com.chatbot.block.service;
 
 import com.chatbot.block.entity.LoginBlock;
-import com.chatbot.block.repository.LoginBlockRepository;
+import com.chatbot.block.repository.LoginBlockQuerydslRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,7 +13,8 @@ import org.springframework.stereotype.Service;
 @Service
 @Transactional
 public class LoginBlockService {
-    private final LoginBlockRepository loginBlockRepository;
+    //    private final LoginBlockRepository loginBlockRepository;
+    private final LoginBlockQuerydslRepository loginBlockRepository;
 
     public List<String> findLoginBlockByLogin(boolean isSuccessfulLogin, boolean isStory) {
         List<LoginBlock> loginBlocks = getLoginBlocks(isSuccessfulLogin, isStory);

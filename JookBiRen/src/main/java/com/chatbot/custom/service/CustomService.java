@@ -22,7 +22,7 @@ import com.chatbot.custom.dto.CustomDto.SimpleImage;
 import com.chatbot.custom.dto.CustomDto.Template;
 import com.chatbot.custom.dto.CustomDto.TextCard;
 import com.chatbot.custom.entity.Custom;
-import com.chatbot.custom.repository.CustomRepository;
+import com.chatbot.custom.repository.CustomQuerydslRepository;
 import com.chatbot.user.entity.User;
 import com.chatbot.user.service.UserService;
 import java.util.ArrayList;
@@ -49,7 +49,8 @@ public class CustomService {
     }};
 
     private final UserService userService;
-    private final CustomRepository customRepository;
+    //    private final CustomRepository customRepository;
+    private final CustomQuerydslRepository customRepository;
     private final CustomBlockService customBlockService;
     private final CustomForwardBlockService customForwardBlockService;
 
