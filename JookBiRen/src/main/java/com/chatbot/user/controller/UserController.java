@@ -18,13 +18,15 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody UserPostDto userInfo) {
-        ResponseDto response = userService.login(User.userPostDtoToUser(userInfo), true);
+//        ResponseDto response = userService.login(User.userPostDtoToUser(userInfo), true);
+        ResponseDto response = userService.login(User.userPostDtoToUser(userInfo));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PostMapping("/loginc")
     public ResponseEntity customLogin(@RequestBody UserPostDto userInfo) {
-        ResponseDto response = userService.login(User.userPostDtoToUser(userInfo), false);
+//        ResponseDto response = userService.login(User.userPostDtoToUser(userInfo), false);
+        ResponseDto response = userService.login(User.userPostDtoToUser(userInfo));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

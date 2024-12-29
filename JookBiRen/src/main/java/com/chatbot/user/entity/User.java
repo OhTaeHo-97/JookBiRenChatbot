@@ -36,7 +36,6 @@ public class User {
     private String firstId;
     private String secondId;
     private boolean isBanned;
-    private boolean isDlc;
     private int custom;
 
     private User(String code, String kakaoId) {
