@@ -18,7 +18,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -27,8 +26,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "users")
-public class User {
+public class UserEp00 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -38,34 +36,34 @@ public class User {
     private boolean isBanned;
     private int custom;
 
-    private User(String code, String kakaoId) {
+    private UserEp00(String code, String kakaoId) {
         this.code = code;
         this.firstId = kakaoId;
     }
 
-    public static User of(String code, String kakaoId) {
-        return new User(code, kakaoId);
+    public static UserEp00 of(String code, String kakaoId) {
+        return new UserEp00(code, kakaoId);
     }
 
-    public static User userPostDtoToUser(UserPostDto userPostDto) {
-        return new User(userPostDto.getAction().getParams().getInput_pw(),
+    public static UserEp00 userPostDtoToUser(UserPostDto userPostDto) {
+        return new UserEp00(userPostDto.getAction().getParams().getInput_pw(),
                 userPostDto.getUserRequest().getUser().getId());
     }
 
-    public static User customOpenDtoToUser(CustomOpenDto customOpenDto) {
-        return new User(null, customOpenDto.getUserRequest().getUser().getId());
+    public static UserEp00 customOpenDtoToUser(CustomOpenDto customOpenDto) {
+        return new UserEp00(null, customOpenDto.getUserRequest().getUser().getId());
     }
 
-    public static User custom1To2DtoToUser(Custom1To2Dto custom1To2Dto) {
-        return new User(null, custom1To2Dto.getUserRequest().getUser().getId());
+    public static UserEp00 custom1To2DtoToUser(Custom1To2Dto custom1To2Dto) {
+        return new UserEp00(null, custom1To2Dto.getUserRequest().getUser().getId());
     }
 
-    public static User custom3To4DtoToUser(Custom3To4Dto custom3To4Dto) {
-        return new User(null, custom3To4Dto.getUserRequest().getUser().getId());
+    public static UserEp00 custom3To4DtoToUser(Custom3To4Dto custom3To4Dto) {
+        return new UserEp00(null, custom3To4Dto.getUserRequest().getUser().getId());
     }
 
-    public static User custom4To5DtoToUser(Custom4To5Dto custom4To5Dto) {
-        return new User(null, custom4To5Dto.getUserRequest().getUser().getId());
+    public static UserEp00 custom4To5DtoToUser(Custom4To5Dto custom4To5Dto) {
+        return new UserEp00(null, custom4To5Dto.getUserRequest().getUser().getId());
     }
 
     private static final String SUCCESSFUL_LOGIN = "%s님 환영합니다! ";
@@ -77,7 +75,7 @@ public class User {
     private static final String STORY = "스토리";
     private static final String RE_INPUT = "다시 입력 하기";
 
-    public static ResponseDto userToResponseDto(User user, int status, String blockId, String tutorialId,
+    public static ResponseDto userToResponseDto(UserEp00 user, int status, String blockId, String tutorialId,
                                                 boolean isStory) {
         if (status == 1) {
             return makeSuccessfulLoginResponse(user, blockId, tutorialId, isStory);
@@ -89,7 +87,7 @@ public class User {
         return makeInvalidCodeResponse(user, blockId);
     }
 
-    private static ResponseDto makeSuccessfulLoginResponse(User user, String blockId, String tutorialId,
+    private static ResponseDto makeSuccessfulLoginResponse(UserEp00 user, String blockId, String tutorialId,
                                                            boolean isStory) {
         if (isStory) {
             return makeSuccessfulLoginResponse(user, blockId, tutorialId);
@@ -97,7 +95,7 @@ public class User {
         return makeSuccessfulCustomLoginResponse(user, blockId);
     }
 
-    private static ResponseDto makeSuccessfulLoginResponse(User user, String blockId, String tutorialId) {
+    private static ResponseDto makeSuccessfulLoginResponse(UserEp00 user, String blockId, String tutorialId) {
         List<Button> buttons = new ArrayList<>();
         buttons.add(makeButton(TUTORIAL, tutorialId));
         buttons.add(makeButton(STORY, blockId));
@@ -111,7 +109,7 @@ public class User {
         return responseDto;
     }
 
-    private static ResponseDto makeSuccessfulCustomLoginResponse(User user, String blockId) {
+    private static ResponseDto makeSuccessfulCustomLoginResponse(UserEp00 user, String blockId) {
         List<Button> buttons = new ArrayList<>();
         buttons.add(makeButton(CUSTOM, blockId));
         TextCard textCard = TextCard.of(String.format(SUCCESSFUL_LOGIN, user.getCode()),
@@ -124,7 +122,7 @@ public class User {
         return responseDto;
     }
 
-    private static ResponseDto makeBannedResponse(User user) {
+    private static ResponseDto makeBannedResponse(UserEp00 user) {
         BannedTextCard textCard = new BannedTextCard(String.format(BANNED_LOGIN, user.getCode()));
         List<Output> outputs = new ArrayList<>();
         outputs.add(Output.of(textCard));
@@ -134,7 +132,7 @@ public class User {
         return responseDto;
     }
 
-    private static ResponseDto makeOverlappingLoginResponse(User user) {
+    private static ResponseDto makeOverlappingLoginResponse(UserEp00 user) {
         BannedTextCard textCard = new BannedTextCard(String.format(OVERLAPPING_LOGIN, user.getCode()));
         List<Output> outputs = new ArrayList<>();
         outputs.add(Output.of(textCard));
@@ -144,7 +142,7 @@ public class User {
         return responseDto;
     }
 
-    private static ResponseDto makeInvalidCodeResponse(User user, String blockId) {
+    private static ResponseDto makeInvalidCodeResponse(UserEp00 user, String blockId) {
         List<Button> buttons = new ArrayList<>();
         buttons.add(makeButton(RE_INPUT, blockId));
         TextCard textCard = TextCard.of(String.format(INVALID_CODE, user.getCode()),

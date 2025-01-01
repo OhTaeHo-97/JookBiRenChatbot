@@ -2,7 +2,7 @@ package com.chatbot.user.controller;
 
 import com.chatbot.user.dto.UserDto.ResponseDto;
 import com.chatbot.user.dto.UserDto.UserPostDto;
-import com.chatbot.user.entity.User;
+import com.chatbot.user.entity.UserEp00;
 import com.chatbot.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,14 +19,14 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody UserPostDto userInfo) {
 //        ResponseDto response = userService.login(User.userPostDtoToUser(userInfo), true);
-        ResponseDto response = userService.login(User.userPostDtoToUser(userInfo));
+        ResponseDto response = userService.login(UserEp00.userPostDtoToUser(userInfo));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PostMapping("/loginc")
     public ResponseEntity customLogin(@RequestBody UserPostDto userInfo) {
 //        ResponseDto response = userService.login(User.userPostDtoToUser(userInfo), false);
-        ResponseDto response = userService.login(User.userPostDtoToUser(userInfo));
+        ResponseDto response = userService.login(UserEp00.userPostDtoToUser(userInfo));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

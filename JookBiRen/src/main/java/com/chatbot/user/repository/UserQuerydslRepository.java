@@ -1,8 +1,8 @@
 package com.chatbot.user.repository;
 
-import static com.chatbot.user.entity.QUser.user;
+import static com.chatbot.user.entity.QUserEp00.userEp00;
 
-import com.chatbot.user.entity.User;
+import com.chatbot.user.entity.UserEp00;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.List;
 import java.util.Optional;
@@ -21,41 +21,41 @@ public class UserQuerydslRepository {
         this.queryFactory = new JPAQueryFactory(this.em);
     }
 
-    public void save(User user) {
-        em.persist(user);
+    public void save(UserEp00 userEp00) {
+        em.persist(userEp00);
     }
 
-    public Optional<User> findByCode(String code) {
-        User result = queryFactory
-                .selectFrom(user)
-                .where(user.code.eq(code))
+    public Optional<UserEp00> findByCode(String code) {
+        UserEp00 result = queryFactory
+                .selectFrom(userEp00)
+                .where(userEp00.code.eq(code))
                 .fetchOne();
 
         return Optional.ofNullable(result);
     }
 
-    public List<User> findAllByFirstId(String kakaoId) {
-        List<User> users = queryFactory
-                .selectFrom(user)
-                .where(user.firstId.eq(kakaoId))
+    public List<UserEp00> findAllByFirstId(String kakaoId) {
+        List<UserEp00> userEp00s = queryFactory
+                .selectFrom(userEp00)
+                .where(userEp00.firstId.eq(kakaoId))
                 .fetch();
 
-        if (users == null || users.isEmpty()) {
+        if (userEp00s == null || userEp00s.isEmpty()) {
             return null;
         }
-        return users;
+        return userEp00s;
     }
 
-    public List<User> findAllByFirstIdOrderByCustomDesc(String kakaoId) {
-        List<User> users = queryFactory
-                .selectFrom(user)
-                .where(user.firstId.eq(kakaoId))
-                .orderBy(user.custom.desc())
+    public List<UserEp00> findAllByFirstIdOrderByCustomDesc(String kakaoId) {
+        List<UserEp00> userEp00s = queryFactory
+                .selectFrom(userEp00)
+                .where(userEp00.firstId.eq(kakaoId))
+                .orderBy(userEp00.custom.desc())
                 .fetch();
 
-        if (users == null || users.isEmpty()) {
+        if (userEp00s == null || userEp00s.isEmpty()) {
             return null;
         }
-        return users;
+        return userEp00s;
     }
 }

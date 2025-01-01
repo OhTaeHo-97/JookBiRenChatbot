@@ -24,7 +24,7 @@ import com.chatbot.custom.dto.CustomDto.SimpleImage;
 import com.chatbot.custom.dto.CustomDto.Template;
 import com.chatbot.custom.dto.CustomDto.TextCard;
 import com.chatbot.custom.entity.Custom;
-import com.chatbot.user.entity.User;
+import com.chatbot.user.entity.UserEp00;
 import com.chatbot.user.service.UserService;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -99,8 +99,8 @@ public class CustomService {
 //    }
 
     // 응답 DTO 생성
-    public ResponseDto openCustom(User userInfo, int customLoc) {
-        User user = userService.findUserByIdOrderByCustom(userInfo.getFirstId());
+    public ResponseDto openCustom(UserEp00 userInfo, int customLoc) {
+        UserEp00 user = userService.findUserByIdOrderByCustom(userInfo.getFirstId());
         if (user != null) {
             int customCode = user.getCustom();
             customCode ^= (1 << (2 - customLoc));
@@ -155,8 +155,8 @@ public class CustomService {
         return quickReplies;
     }
 
-    public CustomAToBResponseDto makeEachCategoryImage(User userInfo, Custom customInfo) {
-        User user = userService.findUserByIdOrderByCustom(userInfo.getFirstId());
+    public CustomAToBResponseDto makeEachCategoryImage(UserEp00 userInfo, Custom customInfo) {
+        UserEp00 user = userService.findUserByIdOrderByCustom(userInfo.getFirstId());
         int customCode = user.getCustom();
         String blockId = customForwardBlockService.findBlockId(customInfo.getCategory(),
                 (customCode & (1 << CUSTOM_CODE_INDEX.get(customInfo.getCategory()))) != 0);

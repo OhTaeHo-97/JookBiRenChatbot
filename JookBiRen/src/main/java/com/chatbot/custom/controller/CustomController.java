@@ -10,7 +10,7 @@ import com.chatbot.custom.dto.CustomDto.CustomOpenDto;
 import com.chatbot.custom.dto.CustomDto.ResponseDto;
 import com.chatbot.custom.entity.Custom;
 import com.chatbot.custom.service.CustomService;
-import com.chatbot.user.entity.User;
+import com.chatbot.user.entity.UserEp00;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,39 +32,42 @@ public class CustomController {
 
     @PostMapping("/custom1")
     public ResponseEntity customOpen1(@RequestBody CustomOpenDto customOpenInfo) {
-        ResponseDto response = customService.openCustom(User.customOpenDtoToUser(customOpenInfo), 0);
+        ResponseDto response = customService.openCustom(UserEp00.customOpenDtoToUser(customOpenInfo), 0);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PostMapping("/custom2")
     public ResponseEntity customOpen2(@RequestBody CustomOpenDto customOpenInfo) {
-        ResponseDto response = customService.openCustom(User.customOpenDtoToUser(customOpenInfo), 1);
+        ResponseDto response = customService.openCustom(UserEp00.customOpenDtoToUser(customOpenInfo), 1);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PostMapping("/custom3")
     public ResponseEntity customOpen3(@RequestBody CustomOpenDto customOpenInfo) {
-        ResponseDto response = customService.openCustom(User.customOpenDtoToUser(customOpenInfo), 2);
+        ResponseDto response = customService.openCustom(UserEp00.customOpenDtoToUser(customOpenInfo), 2);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PostMapping("/custom1to2")
     public ResponseEntity custom1To2(@RequestBody Custom1To2Dto custom1To2Info) {
-        CustomAToBResponseDto response = customService.makeEachCategoryImage(User.custom1To2DtoToUser(custom1To2Info),
+        CustomAToBResponseDto response = customService.makeEachCategoryImage(
+                UserEp00.custom1To2DtoToUser(custom1To2Info),
                 Custom.custom1To2DtoToCustom(custom1To2Info));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PostMapping("/custom3to4")
     public ResponseEntity custom3To4(@RequestBody Custom3To4Dto custom3To4Info) {
-        CustomAToBResponseDto response = customService.makeEachCategoryImage(User.custom3To4DtoToUser(custom3To4Info),
+        CustomAToBResponseDto response = customService.makeEachCategoryImage(
+                UserEp00.custom3To4DtoToUser(custom3To4Info),
                 Custom.custom3To4DtoToCustom(custom3To4Info));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PostMapping("/custom4to5")
     public ResponseEntity custom3To4(@RequestBody Custom4To5Dto custom4To5Info) {
-        CustomAToBResponseDto response = customService.makeEachCategoryImage(User.custom4To5DtoToUser(custom4To5Info),
+        CustomAToBResponseDto response = customService.makeEachCategoryImage(
+                UserEp00.custom4To5DtoToUser(custom4To5Info),
                 Custom.custom4To5DtoToCustom(custom4To5Info));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
