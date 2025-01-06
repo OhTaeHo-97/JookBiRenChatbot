@@ -66,19 +66,19 @@ public class UserEp00 {
         return new UserEp00(null, custom4To5Dto.getUserRequest().getUser().getId());
     }
 
-    private static final String SUCCESSFUL_LOGIN = "%s님 환영합니다! ";
+    private static final String SUCCESSFUL_LOGIN = "%s님 환영합니다!\n다시 코드를 입력하는게 귀찮으시다면 '처음으로' 대신 '메뉴'를 입력해주세요";
     private static final String BANNED_LOGIN = "%s는 중복 로그인으로 접근이 불가능한 계정입니다.\n";
     private static final String OVERLAPPING_LOGIN = "%s는 이미 다른 kakaoID에서 로그인 된 계정입니다.\n";
     private static final String INVALID_CODE = "%s는 없는 접속코드 입니다.\n다시 입력해 주세요.";
+    private static final String MENU = "메뉴";
     private static final String CUSTOM = "커스텀";
     private static final String TUTORIAL = "튜토리얼";
     private static final String STORY = "스토리";
     private static final String RE_INPUT = "다시 입력 하기";
 
-    public static ResponseDto userToResponseDto(UserEp00 user, int status, String blockId, String tutorialId,
-                                                boolean isStory) {
+    public static ResponseDto userToResponseDto(UserEp00 user, int status, String blockId) {
         if (status == 1) {
-            return makeSuccessfulLoginResponse(user, blockId, tutorialId, isStory);
+            return makeSuccessfulLoginResponse(user, blockId);
         } else if (status == 2) {
             return makeBannedResponse(user);
         } else if (status == 3) {
@@ -87,18 +87,9 @@ public class UserEp00 {
         return makeInvalidCodeResponse(user, blockId);
     }
 
-    private static ResponseDto makeSuccessfulLoginResponse(UserEp00 user, String blockId, String tutorialId,
-                                                           boolean isStory) {
-        if (isStory) {
-            return makeSuccessfulLoginResponse(user, blockId, tutorialId);
-        }
-        return makeSuccessfulCustomLoginResponse(user, blockId);
-    }
-
-    private static ResponseDto makeSuccessfulLoginResponse(UserEp00 user, String blockId, String tutorialId) {
+    private static ResponseDto makeSuccessfulLoginResponse(UserEp00 user, String blockId) {
         List<Button> buttons = new ArrayList<>();
-        buttons.add(makeButton(TUTORIAL, tutorialId));
-        buttons.add(makeButton(STORY, blockId));
+        buttons.add(makeButton(MENU, blockId));
         TextCard textCard = TextCard.of(String.format(SUCCESSFUL_LOGIN, user.getCode()),
                 Collections.unmodifiableList(buttons));
         List<Output> outputs = new ArrayList<>();
@@ -109,18 +100,32 @@ public class UserEp00 {
         return responseDto;
     }
 
-    private static ResponseDto makeSuccessfulCustomLoginResponse(UserEp00 user, String blockId) {
-        List<Button> buttons = new ArrayList<>();
-        buttons.add(makeButton(CUSTOM, blockId));
-        TextCard textCard = TextCard.of(String.format(SUCCESSFUL_LOGIN, user.getCode()),
-                Collections.unmodifiableList(buttons));
-        List<Output> outputs = new ArrayList<>();
-        outputs.add(Output.of(textCard));
-        Template template = new Template(outputs);
-        ResponseDto responseDto = new ResponseDto(template);
-
-        return responseDto;
-    }
+//    private static ResponseDto makeSuccessfulLoginResponse(UserEp00 user, String blockId, String tutorialId) {
+//        List<Button> buttons = new ArrayList<>();
+//        buttons.add(makeButton(TUTORIAL, tutorialId));
+//        buttons.add(makeButton(STORY, blockId));
+//        TextCard textCard = TextCard.of(String.format(SUCCESSFUL_LOGIN, user.getCode()),
+//                Collections.unmodifiableList(buttons));
+//        List<Output> outputs = new ArrayList<>();
+//        outputs.add(Output.of(textCard));
+//        Template template = new Template(outputs);
+//        ResponseDto responseDto = new ResponseDto(template);
+//
+//        return responseDto;
+//    }
+//
+//    private static ResponseDto makeSuccessfulCustomLoginResponse(UserEp00 user, String blockId) {
+//        List<Button> buttons = new ArrayList<>();
+//        buttons.add(makeButton(CUSTOM, blockId));
+//        TextCard textCard = TextCard.of(String.format(SUCCESSFUL_LOGIN, user.getCode()),
+//                Collections.unmodifiableList(buttons));
+//        List<Output> outputs = new ArrayList<>();
+//        outputs.add(Output.of(textCard));
+//        Template template = new Template(outputs);
+//        ResponseDto responseDto = new ResponseDto(template);
+//
+//        return responseDto;
+//    }
 
     private static ResponseDto makeBannedResponse(UserEp00 user) {
         BannedTextCard textCard = new BannedTextCard(String.format(BANNED_LOGIN, user.getCode()));
