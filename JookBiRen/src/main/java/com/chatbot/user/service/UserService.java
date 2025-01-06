@@ -24,10 +24,10 @@ public class UserService {
     public ResponseDto login(UserEp00 userInfo) {
         String code = userInfo.getCode();
         // 코드 접두사가 있다면 접두사를 지우고 없다면 잘못된 코드임을 반환
-        if (!code.contains(codePrefix)) {
-            return unsuccessfulLogin(userInfo);
-        }
-        code = code.replaceAll(codePrefix, "");
+//        if (!code.contains(codePrefix)) {
+//            return unsuccessfulLogin(userInfo);
+//        }
+//        code = code.replaceAll(codePrefix, "");
 
 //        if (code.contains(codePrefix)) {
 //            code = code.replaceAll(codePrefix, "");
