@@ -42,6 +42,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
     runtimeOnly 'com.mysql:mysql-connector-j'
 
+    // validation
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
     // Parameter Store
     implementation 'org.springframework.cloud:spring-cloud-starter-aws-parameter-store-config'
 
@@ -50,6 +53,9 @@ dependencies {
     annotationProcessor "com.querydsl:querydsl-apt:${queryDslVersion}"
     implementation "com.querydsl:querydsl-core:${queryDslVersion}"
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+
+    // swagger
+    implementation 'org.springdoc:springdoc-openapi-ui:1.7.0'
 
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }

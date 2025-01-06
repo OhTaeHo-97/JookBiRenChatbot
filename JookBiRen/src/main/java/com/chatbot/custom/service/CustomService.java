@@ -1,5 +1,6 @@
 package com.chatbot.custom.service;
 
+import static com.chatbot.custom.util.Custom.CUSTOM_INFO;
 import static com.chatbot.custom.util.CustomConstant.CUSTOM_CODE_INDEX;
 import static com.chatbot.custom.util.CustomConstant.EYES;
 import static com.chatbot.custom.util.CustomConstant.NECKLACE;
@@ -13,6 +14,7 @@ import com.chatbot.custom.dto.CustomDto.CustomAToBResponseDto;
 import com.chatbot.custom.dto.CustomDto.CustomAToBTemplate;
 import com.chatbot.custom.dto.CustomDto.CustomAToBTextCard;
 import com.chatbot.custom.dto.CustomDto.CustomImageResponseDto;
+import com.chatbot.custom.dto.CustomDto.CustomInfoDto;
 import com.chatbot.custom.dto.CustomDto.ImageOutput;
 import com.chatbot.custom.dto.CustomDto.ImageTemplate;
 import com.chatbot.custom.dto.CustomDto.Output;
@@ -22,8 +24,7 @@ import com.chatbot.custom.dto.CustomDto.SimpleImage;
 import com.chatbot.custom.dto.CustomDto.Template;
 import com.chatbot.custom.dto.CustomDto.TextCard;
 import com.chatbot.custom.entity.Custom;
-import com.chatbot.custom.repository.CustomQuerydslRepository;
-import com.chatbot.user.entity.User;
+import com.chatbot.user.entity.UserEp00;
 import com.chatbot.user.service.UserService;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -50,7 +51,7 @@ public class CustomService {
 
     private final UserService userService;
     //    private final CustomRepository customRepository;
-    private final CustomQuerydslRepository customRepository;
+//    private final CustomQuerydslRepository customRepository;
     private final CustomBlockService customBlockService;
     private final CustomForwardBlockService customForwardBlockService;
 
@@ -74,28 +75,46 @@ public class CustomService {
     }
 
     private String findCustomImageName(Custom custom) {
-        Custom result = findCustomByCategoryAndType(custom.getCategory(), custom.getType());
+        Integer result = findCustomByCategoryAndType(custom.getCategory(), custom.getType());
         if (result == null) {
             return "error";
         }
-        return String.valueOf(result.getValue());
+        return String.valueOf(result);
     }
 
-    private Custom findCustomByCategoryAndType(String category, String type) {
-        return customRepository.findByCategoryAndAndType(category, type).orElse(null);
+//    private String findCustomImageName(Custom custom) {
+//        Custom result = findCustomByCategoryAndType(custom.getCategory(), custom.getType());
+//        if (result == null) {
+//            return "error";
+//        }
+//        return String.valueOf(result.getValue());
+//    }
+
+    private Integer findCustomByCategoryAndType(String category, String type) {
+        return CUSTOM_INFO.get(new CustomInfoDto(category, type));
     }
+
+//    private Custom findCustomByCategoryAndType(String category, String type) {
+//        return customRepository.findByCategoryAndAndType(category, type).orElse(null);
+//    }
 
     // 응답 DTO 생성
-    public ResponseDto openCustom(User userInfo, int customLoc) {
-        User user = userService.findUserByIdOrderByCustom(userInfo.getFirstId());
-        if (user != null && user.isDlc()) {
+    public ResponseDto openCustom(UserEp00 userInfo, int customLoc) {
+        UserEp00 user = userService.findUserByIdOrderByCustom(userInfo.getFirstId());
+        if (user != null) {
             int customCode = user.getCustom();
-            if ((customCode & (1 << (2 - customLoc))) == 0) {
-                customCode ^= (1 << (2 - customLoc));
-                user.setCustom(customCode);
-                userService.updateUser(user);
-            }
+            customCode ^= (1 << (2 - customLoc));
+            user.setCustom(customCode);
+            userService.updateUser(user);
         }
+//        if (user != null && user.isDlc()) {
+//            int customCode = user.getCustom();
+//            if ((customCode & (1 << (2 - customLoc))) == 0) {
+//                customCode ^= (1 << (2 - customLoc));
+//                user.setCustom(customCode);
+//                userService.updateUser(user);
+//            }
+//        }
 
         return makeResponseDto();
     }
@@ -136,8 +155,8 @@ public class CustomService {
         return quickReplies;
     }
 
-    public CustomAToBResponseDto makeEachCategoryImage(User userInfo, Custom customInfo) {
-        User user = userService.findUserByIdOrderByCustom(userInfo.getFirstId());
+    public CustomAToBResponseDto makeEachCategoryImage(UserEp00 userInfo, Custom customInfo) {
+        UserEp00 user = userService.findUserByIdOrderByCustom(userInfo.getFirstId());
         int customCode = user.getCustom();
         String blockId = customForwardBlockService.findBlockId(customInfo.getCategory(),
                 (customCode & (1 << CUSTOM_CODE_INDEX.get(customInfo.getCategory()))) != 0);

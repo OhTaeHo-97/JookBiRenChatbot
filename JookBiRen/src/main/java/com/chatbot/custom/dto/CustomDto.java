@@ -1,6 +1,8 @@
 package com.chatbot.custom.dto;
 
 import java.util.List;
+import java.util.Objects;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 public class CustomDto {
@@ -227,6 +229,30 @@ public class CustomDto {
         public CustomAToBButton(String label, String blockId) {
             this.label = label;
             this.blockId = blockId;
+        }
+    }
+
+    @Getter
+    @AllArgsConstructor
+    public static class CustomInfoDto {
+        private String category;
+        private String type;
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
+            CustomInfoDto that = (CustomInfoDto) o;
+            return Objects.equals(category, that.category) && Objects.equals(type, that.type);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(category, type);
         }
     }
 }

@@ -9,10 +9,6 @@ import com.chatbot.answer.dto.AnswerDto.TextCard;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,11 +16,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-@Entity
 public class Answer {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
     private int episode;
     private int quizNumber;
     private String answer;
@@ -36,7 +28,7 @@ public class Answer {
         int episode = blockName.charAt(2) - '0';
         int quizNumber = Integer.parseInt(blockName.substring(4));
 
-        return new Answer(0, episode, quizNumber, userInput.replaceAll(" ", "").toLowerCase());
+        return new Answer(episode, quizNumber, userInput.replaceAll(" ", "").toLowerCase());
     }
 
     private static final String TUTORIAL_CORRECT_TEXT = "튜토리얼 문제 정답입니다.";
