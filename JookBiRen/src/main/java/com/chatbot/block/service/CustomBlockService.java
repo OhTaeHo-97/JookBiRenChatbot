@@ -13,7 +13,7 @@ public class CustomBlockService {
 
     public String findCustomBlockId(boolean isInitial) {
         if (isInitial) {
-            return "65148255ac3ca11aea29501e";
+            return "6762dd757c842c4d39423b2c";
         }
         return "652fc1bad134aa37160bdb6f";
     }
