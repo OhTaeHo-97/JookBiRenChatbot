@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
@@ -17,9 +16,6 @@ public class UserService {
     //    private final UserRepository userRepository;
     private final UserQuerydslRepository userRepository;
 //    private final LoginBlockService loginBlockService;
-
-    @Value("${login.code.prefix}")
-    private String codePrefix;
 
     public ResponseDto login(UserEp00 userInfo) {
         String code = userInfo.getCode();
