@@ -32,7 +32,7 @@ public class Answer {
     }
 
     private static final String TUTORIAL_CORRECT_TEXT = "튜토리얼 문제 정답입니다.";
-    private static final String TUTORIAL_WRONG_TEXT = "튜토리얼 문제 오답입니다.\n 힌트를 확인해보세요!";
+    private static final String TUTORIAL_WRONG_TEXT = "튜토리얼 문제 오답입니다.\n힌트를 확인해보세요!";
     private static final String CORRECT_TEXT = "문제 %d-%d 정답입니다.";
     private static final String ANSWER_TEXT = "문제 %d-%d 해설";
     private static final String NEXT_TEXT = "다음";
